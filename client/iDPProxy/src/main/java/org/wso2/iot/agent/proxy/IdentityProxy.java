@@ -55,7 +55,9 @@ public class IdentityProxy implements CallBack {
     public static synchronized IdentityProxy getInstance() {
         return identityProxy;
     }
-
+    public static String getValidCurrentToken() {
+        return token.getAccessToken();
+    }
     public int getRequestCode() {
         return requestCode;
     }

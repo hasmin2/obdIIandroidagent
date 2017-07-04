@@ -35,15 +35,16 @@ public class Constants {
 	public static final boolean ALLOW_SYSTEM_APPS_IN_APPS_LIST_RESPONSE =
 			BuildConfig.ALLOW_SYSTEM_APPS_IN_APPS_LIST_RESPONSE;
 
-
-
-	// Set DEFAULT_OWNERSHIP to null if no overriding is needed. Other possible values are,
-	// OWNERSHIP_BYOD or OWNERSHIP_COPE. If you are using the mutual SSL authentication
+	// DEFAULT_OWNERSHIP to null if no overriding is needed. Other possible values are,
+	// OWNERSHIP_BYOD or . If you are using the mutual SSL authentication
 	// This value must be set to a value other than null.
 	public static final String DEFAULT_OWNERSHIP = BuildConfig.DEFAULT_OWNERSHIP;
 	// This is set to override the server host name retrieving screen. If overriding is not
 	// needed, set this to null.
 	public static final String DEFAULT_HOST = BuildConfig.DEFAULT_HOST;
+	public static final String DEFAULT_TENANT_DOMAIN_GROUP = BuildConfig.DEFAULT_TENANT_DOMAIN_GROUP;
+	public static final String DEFAULT_TENANT_DOMAIN_DATA_INSTANCE = BuildConfig.DEFAULT_TENANT_DOMAIN_DATA_INSTANCE;
+	public static final String DEFAULT_BROKER_HOST = BuildConfig.DEFAULT_BROKER_HOST;
 	public static final String APP_MANAGER_HOST = BuildConfig.APP_MANAGER_HOST;
 	public static final String CLOUD_MANAGER = BuildConfig.CLOUD_MANAGER;
 	public static final String SIGN_UP_URL = BuildConfig.SIGN_UP_URL;
@@ -157,6 +158,7 @@ public class Constants {
 	public static final String DEVICE_TYPE = "deviceType";
 	public static final String CLIENT_ID = "client_id";
 	public static final String CLIENT_SECRET = "client_secret";
+	public static final String TENANT_DOMAIN = "tenant_domain";
 	public static final String CLIENT_NAME = "client_name";
 	public static final String USER_AGENT = "Mozilla/5.0 ( compatible ), Android";
 	public static final String ADMIN_MESSAGE = "message";
@@ -468,6 +470,7 @@ public class Constants {
 		public static final int DEFAULT_LISTENER_CODE = BuildConfig.DEFAULT_LISTENER_CODE;
 		public static final String REQUEST_CODE = "requestCode";
 		public static final String LOCATION_EVENT_TYPE = "location";
+		public static final String DATA_EVENT = "dataevent";
 	}
 
 	public final class PreferenceFlag {
@@ -476,9 +479,12 @@ public class Constants {
 		}
 		public static final String REG_ID = "regId";
 		public static final String REGISTERED = "registered";
+		public static final String BROKER_IP = "brokerIp";
 		public static final String IP = "ip";
 		public static final String DEVICE_ACTIVE = "deviceActive";
+		public static final String BROKER_PORT = "brokerPort";
 		public static final String PORT = "serverPort";
+		public static final String BROKER_PROTOCOL = "brokerProtocol";
 		public static final String PROTOCOL = "serverProtocol";
 		public static final String APPLIED_POLICY = "appliedPolicy";
 		public static final String IS_AGREED = "isAgreed";

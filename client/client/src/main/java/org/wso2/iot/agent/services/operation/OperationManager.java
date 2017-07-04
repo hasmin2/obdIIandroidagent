@@ -41,6 +41,7 @@ import org.apache.commons.io.input.ReversedLinesFileReader;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.wso2.iot.agent.AgentApplication;
 import org.wso2.iot.agent.AlertActivity;
 import org.wso2.iot.agent.AndroidAgentException;
 import org.wso2.iot.agent.R;
@@ -57,6 +58,7 @@ import org.wso2.iot.agent.beans.Operation;
 import org.wso2.iot.agent.beans.WifiProfile;
 import org.wso2.iot.agent.events.beans.EventPayload;
 import org.wso2.iot.agent.events.listeners.WifiConfigCreationListener;
+import org.wso2.iot.agent.events.publisher.MqttDataPublisher;
 import org.wso2.iot.agent.proxy.interfaces.APIResultCallBack;
 import org.wso2.iot.agent.services.AgentDeviceAdminReceiver;
 import org.wso2.iot.agent.services.DeviceInfoPayload;
@@ -77,6 +79,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
+
+import static android.security.KeyStore.getApplicationContext;
 
 public abstract class OperationManager implements APIResultCallBack, VersionBasedOperations {
 
@@ -193,6 +197,8 @@ public abstract class OperationManager implements APIResultCallBack, VersionBase
     public void getDeviceInfo(org.wso2.iot.agent.beans.Operation operation) throws AndroidAgentException {
         DeviceInfoPayload deviceInfoPayload = new DeviceInfoPayload(context);
         deviceInfoPayload.build();
+        AgentApplication agentApp = (AgentApplication) getApplicationContext();
+        publishHttpClientMessage(agentApp.getHttpClientMsg());
         String replyPayload = deviceInfoPayload.getDeviceInfoPayload();
         operation.setOperationResponse(replyPayload);
         operation.setStatus(resources.getString(R.string.operation_value_completed));
@@ -201,7 +207,16 @@ public abstract class OperationManager implements APIResultCallBack, VersionBase
             Log.d(TAG, "getDeviceInfo executed.");
         }
     }
-
+    private void publishHttpClientMessage(String httpClientPayload) {
+        EventPayload eventPayload = new EventPayload();
+        eventPayload.setPayload(httpClientPayload);
+        eventPayload.setType(Constants.EventListeners.DATA_EVENT);
+        MqttDataPublisher mqttDataPublisher = new MqttDataPublisher(context);
+        mqttDataPublisher.publish(eventPayload);
+        if (Constants.DEBUG_MODE_ENABLED) {
+            Log.d(TAG, "Location Event is published.");
+        }
+    }
     /**
      * Retrieve location device information.
      *

@@ -44,7 +44,7 @@ import org.wso2.iot.agent.utils.Response;
  */
 public class ServerConfigsActivity extends AppCompatActivity {
 
-	private EditText editTextServerIP;
+	private EditText editTextServerIP, editTextMqttBrokerIP;
 	private Button btnStartRegistration;
 	private Context context;
 
@@ -54,6 +54,7 @@ public class ServerConfigsActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_server_configs);
 		context = this.getApplicationContext();
 		editTextServerIP = (EditText) findViewById(R.id.editTextServerIP);
+		editTextMqttBrokerIP = (EditText) findViewById(R.id.editTextMqttBrokerIP);
 		btnStartRegistration = (Button) findViewById(R.id.btnStartRegistration);
 
 		btnStartRegistration.setOnClickListener(new OnClickListener() {
@@ -61,7 +62,9 @@ public class ServerConfigsActivity extends AppCompatActivity {
 			public void onClick(View v) {
 				if (!editTextServerIP.getText().toString().trim().isEmpty()) {
 					String host = editTextServerIP.getText().toString().trim();
+					String mqttHost = editTextMqttBrokerIP.getText().toString().trim();
 					CommonUtils.saveHostDeatils(context, host);
+					CommonUtils.saveMqttBrokerDeatils(context, mqttHost);
 					startAuthenticationActivity();
 				} else {
 					Toast.makeText(context.getApplicationContext(),
@@ -83,6 +86,7 @@ public class ServerConfigsActivity extends AppCompatActivity {
 			btnStartRegistration.setVisibility(View.VISIBLE);
 			editTextServerIP.setVisibility(View.VISIBLE);
 			String ipSaved = Constants.DEFAULT_HOST;
+			String brokerSaved = Constants.DEFAULT_BROKER_HOST;
 			String prefIP = Preference.getString(context.getApplicationContext(), Constants.PreferenceFlag.IP);
 			if (prefIP != null) {
 				ipSaved = prefIP;
@@ -92,10 +96,15 @@ public class ServerConfigsActivity extends AppCompatActivity {
 				ipSaved = Constants.DEFAULT_HOST;
 				CommonUtils.saveHostDeatils(context, ipSaved);
 			}
+			if (Constants.DEFAULT_BROKER_HOST != null){
+				brokerSaved = Constants.DEFAULT_BROKER_HOST;
+				CommonUtils.saveMqttBrokerDeatils(context, brokerSaved);
+			}
 
 			// check if we have the IP saved previously.
 			if (ipSaved != null && !ipSaved.isEmpty()) {
 				editTextServerIP.setText(ipSaved);
+				editTextMqttBrokerIP.setText(brokerSaved);
 				btnStartRegistration.setBackgroundResource(R.drawable.btn_orange);
 				btnStartRegistration.setTextColor(ContextCompat.getColor(this, R.color.white));
 				btnStartRegistration.setEnabled(true);
@@ -131,6 +140,21 @@ public class ServerConfigsActivity extends AppCompatActivity {
 					enableSubmitIfReady();
 				}
 			});
+			editTextMqttBrokerIP.addTextChangedListener(new TextWatcher() {
+				@Override
+				public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+				}
+
+				@Override
+				public void onTextChanged(CharSequence s, int start, int before, int count) {
+					enableSubmitIfReady();
+				}
+
+				@Override
+				public void afterTextChanged(Editable s) {
+					enableSubmitIfReady();
+				}
+			});
 		}
 	}
 
@@ -142,7 +166,7 @@ public class ServerConfigsActivity extends AppCompatActivity {
 
 		boolean isReady = false;
 
-		if (editTextServerIP.getText().toString().length() >= 1) {
+		if (editTextServerIP.getText().toString().length() >= 1 && editTextMqttBrokerIP.getText().toString().length() >= 1) {
 			isReady = true;
 		}
 

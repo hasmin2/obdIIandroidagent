@@ -295,6 +295,9 @@
     <string name="info_label_imsi">IMSI:</string>
     <string name="info_label_os">OS:</string>
     <string name="info_label_rooted">Rooted:</string>
+    <string name="info_label_brokerInfo">MQTT Broker Infomation:</string>
+    <string name="info_label_topicInfo">MQTT Topic Info:</string>
+    <string name="info_label_HttpMessage">HTTP Client Message from OBDII Bluetooth:</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="ok">Ok</string>
@@ -316,7 +319,8 @@
     <string name="try_again">Try again</string>
     <string name="button_unregister">Unregister</string>
     <string name="button_enable_managed_profile">Enable Managed Profile</string>
-    <string name="txt_server_address">Server Address</string>
+    <string name="txt_server_address">Server Address ex)http://localhost:8280</string>
+    <string name="txt_mqtt_broker_address">Mqtt Broker Address ex)tcp://localhost:1886</string>
     <string name="txt_organization">Organization</string>
     <string name="txt_username">Username</string>
     <string name="txt_password">Password</string>
@@ -368,7 +372,7 @@
     <string name="title_activity_log">LogActivity</string>
 
     <!-- Headings -->
-    <string name="registration_info">If your server runs on a different port, server address should be like www.abc.com:8280</string>
+    <string name="registration_info">If your server runs on a different port, server address should be like www.abc.com:8280 \nMQTT Broker should like with tcp://xxx.com:1886. No confirmation is currently supported, thus be careful.</string>
     <string name="enable_work_profile_heading">Your device supports Android For Work. Set-up the work-profile first and let the Agent Control the Work Profile.</string>
 
     <!-- Validation Errors -->

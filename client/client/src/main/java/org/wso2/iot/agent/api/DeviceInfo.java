@@ -30,6 +30,7 @@ import android.os.Build;
 import android.provider.Settings.Secure;
 import android.telephony.TelephonyManager;
 
+import org.wso2.iot.agent.BuildConfig;
 import org.wso2.iot.agent.R;
 import org.wso2.iot.agent.services.AgentDeviceAdminReceiver;
 import org.wso2.iot.agent.utils.CommonUtils;
@@ -48,6 +49,7 @@ public class DeviceInfo {
 	private TelephonyManager telephonyManager;
 	private DevicePolicyManager devicePolicyManager;
 	private ComponentName cdmDeviceAdmin;
+	private String prefBrokerIP, prefBrokerProtocol, prefBrokerPort, tenantDomainGroup, tenantDomainDataInstance, tenantDomain;
 
 	public DeviceInfo(Context context) {
 		this.context = context;
@@ -55,6 +57,12 @@ public class DeviceInfo {
 		this.telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 		this.devicePolicyManager = (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
 		cdmDeviceAdmin = new ComponentName(context, AgentDeviceAdminReceiver.class);
+		prefBrokerIP = Preference.getString(context, Constants.PreferenceFlag.BROKER_IP);
+		prefBrokerPort = Preference.getString(context, Constants.PreferenceFlag.BROKER_PORT);
+		prefBrokerProtocol = Preference.getString(context, Constants.PreferenceFlag.BROKER_PROTOCOL);
+		tenantDomainGroup = org.wso2.iot.agent.BuildConfig.DEFAULT_TENANT_DOMAIN_GROUP;
+		tenantDomainDataInstance = BuildConfig.DEFAULT_TENANT_DOMAIN_DATA_INSTANCE;;
+		tenantDomain = Preference.getString(context, Constants.TENANT_DOMAIN);
 	}
 
 	/**
@@ -65,11 +73,18 @@ public class DeviceInfo {
 		return telephonyManager.getSimOperatorName();
 	}
 
+	public String getBrokerIP() { return this.prefBrokerIP; }
+	public String getBrokerPort() { return this.prefBrokerPort; }
+	public String getBrokerProtocol() { return this.prefBrokerProtocol; }
+	public String getTenantDomain() { return this.tenantDomain; }
+	public String getTenantDomainDataInstance() { return this.tenantDomainDataInstance; }
+	public String getTenantDomainGroup() { return this.tenantDomainGroup; }
+
 	/**
 	 * Returns the device model.
 	 * @return - Device model.
 	 */
-	public String getDeviceModel() {	
+	public String getDeviceModel() {
 		return android.os.Build.MODEL;
 	}
 

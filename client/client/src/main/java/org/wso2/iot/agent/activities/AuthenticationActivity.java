@@ -31,7 +31,6 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -530,6 +529,7 @@ public class AuthenticationActivity extends AppCompatActivity implements APIAcce
 
 			Preference.putString(context, Constants.CLIENT_ID, clientKey);
 			Preference.putString(context, Constants.CLIENT_SECRET, clientSecret);
+			Preference.putString(context, Constants.TENANT_DOMAIN, etDomain.getText().toString().trim());
 
 			CredentialInfo info = new CredentialInfo();
 			info.setClientID(clientKey);

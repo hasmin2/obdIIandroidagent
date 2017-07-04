@@ -103,6 +103,7 @@ public class CommonUtils {
 
 	public static String TAG = CommonUtils.class.getSimpleName();
 	private static final String PROTOCOL_HTTPS = "https://";
+	private static final String PROTOCOL_TCP = "tcp://";
 	private static final String PROTOCOL_HTTP = "http://";
 	private static final String COLON = ":";
 	/**
@@ -553,7 +554,16 @@ public class CommonUtils {
 		appRestriction.setRestrictedList(restrictedPackages);
 		return appRestriction;
 	}
-
+	public static void saveMqttBrokerDeatils(Context context, String host){
+		if (host.contains(PROTOCOL_TCP)) {
+			String hostWithPort = host.substring(PROTOCOL_TCP.length(), host.length());
+			Preference.putString(context.getApplicationContext(), Constants.PreferenceFlag.BROKER_IP, getHostFromUrl(hostWithPort));
+			Preference.putString(context.getApplicationContext(), Constants.PreferenceFlag.BROKER_PROTOCOL, PROTOCOL_TCP);
+			Preference.putString(context.getApplicationContext(), Constants.PreferenceFlag.BROKER_PORT, getPortFromUrl(hostWithPort, PROTOCOL_TCP));
+		} else {
+			Preference.putString(context.getApplicationContext(), Constants.PreferenceFlag.BROKER_IP, host);
+		}
+	}
 	public static void saveHostDeatils(Context context, String host){
 		if (host.contains(PROTOCOL_HTTP)) {
 			String hostWithPort = host.substring(PROTOCOL_HTTP.length(), host.length());
@@ -590,11 +600,16 @@ public class CommonUtils {
 	public static String getPortFromUrl (String url, String protocol) {
 		if (url.contains(COLON)) {
 			return url.substring((url.indexOf(COLON) + 1), url.length());
-		} else {
+		}
+		else {
 			if(protocol.equals(PROTOCOL_HTTP)) {
 				return String.valueOf(org.wso2.iot.agent.proxy.utils.Constants.HTTP);
-			} else {
+			}
+			else if(protocol.equals(PROTOCOL_HTTPS)) {
 				return String.valueOf(org.wso2.iot.agent.proxy.utils.Constants.HTTPS);
+			}
+			else {
+				return String.valueOf(org.wso2.iot.agent.proxy.utils.Constants.TCP);
 			}
 		}
 	}

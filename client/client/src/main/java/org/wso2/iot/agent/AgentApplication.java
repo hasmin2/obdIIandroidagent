@@ -27,15 +27,18 @@ import android.util.Log;
 
 import com.splunk.mint.Mint;
 
+import org.wso2.iot.agent.events.listeners.TorqueHttpD;
 import org.wso2.iot.agent.services.EnrollmentService;
 import org.wso2.iot.agent.utils.Constants;
+
+import java.io.IOException;
 
 public class AgentApplication extends Application {
 
     // Configs
     private int requestCode = 0;
     private int relaunchDelay = 5000;
-
+    private TorqueHttpD torqueHttpD;
     public AgentApplication() {
         // setup handler for uncaught exception
         Thread.UncaughtExceptionHandler _unCaughtExceptionHandler = new Thread.UncaughtExceptionHandler() {
@@ -61,9 +64,15 @@ public class AgentApplication extends Application {
         };
         Thread.setDefaultUncaughtExceptionHandler(_unCaughtExceptionHandler);
     }
-
+    public String getHttpClientMsg() {return torqueHttpD.getMessage(); }
     public void onCreate(){
         super.onCreate();
+        try {
+            torqueHttpD = new TorqueHttpD();
+            torqueHttpD.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         if (Constants.LogPublisher.LOG_PUBLISHER_IN_USE.equals(Constants.LogPublisher.SPLUNK_PUBLISHER)) {
             if (Constants.SplunkConfigs.TYPE_MINT.equals(Constants.SplunkConfigs.DATA_COLLECTOR_TYPE)) {

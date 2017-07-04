@@ -21,6 +21,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import org.wso2.iot.agent.AgentApplication;
 import org.wso2.iot.agent.R;
 import org.wso2.iot.agent.api.DeviceInfo;
 
@@ -41,6 +42,12 @@ public class DisplayDeviceInfoActivity extends Activity {
 		TextView sdk = (TextView) findViewById(R.id.txtSDK);
 		TextView os = (TextView) findViewById(R.id.txtOS);
 		TextView root = (TextView) findViewById(R.id.txtRoot);
+		TextView brokerInfo = (TextView) findViewById(R.id.txtBrokerInfo);
+		TextView topicInfo = (TextView) findViewById(R.id.txtTopicInfo);
+		TextView topicInfoTitle = (TextView) findViewById(R.id.txtTopicInfoTitle);
+		TextView brokerInfoTitle = (TextView) findViewById(R.id.txtBrokerInfoTitle);
+		TextView httpMessageTitle = (TextView) findViewById(R.id.txtHttpMessageTitle);
+		TextView httpMessage = (TextView) findViewById(R.id.txtHttpMessage);
 
 		deviceId.setText(getResources().getString(R.string.info_label_imei) +
 		                 getResources().getString(R.string.intent_extra_space) +
@@ -53,6 +60,13 @@ public class DisplayDeviceInfoActivity extends Activity {
 		model.setText(getResources().getString(R.string.info_label_model) +
 		              getResources().getString(R.string.intent_extra_space) +
 		              deviceInfo.getDeviceModel());
+		brokerInfoTitle.setText(getResources().getString(R.string.info_label_brokerInfo));
+		brokerInfo.setText(deviceInfo.getBrokerProtocol()+deviceInfo.getBrokerIP()+":"+deviceInfo.getBrokerPort());
+		topicInfoTitle.setText(getResources().getString(R.string.info_label_topicInfo));
+		topicInfo.setText(deviceInfo.getTenantDomain()+"/"+deviceInfo.getTenantDomainGroup()+"/"+deviceInfo.getDeviceId()+"/"+deviceInfo.getTenantDomainDataInstance());
+		httpMessageTitle.setText(getResources().getString(R.string.info_label_HttpMessage));
+		AgentApplication agentApp = (AgentApplication) getApplicationContext();
+		httpMessage.setText(agentApp.getHttpClientMsg());
 
 		String operators;
 		

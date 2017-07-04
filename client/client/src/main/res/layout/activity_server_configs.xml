@@ -30,7 +30,7 @@
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/inputLayoutEditTextServerIP"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:theme="@style/InputText">
 
                 <EditText
@@ -42,6 +42,27 @@
                     android:cursorVisible="true"
                     android:ems="10"
                     android:hint="@string/txt_server_address"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textColor="@android:color/black"
+                    android:textCursorDrawable="@null" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/inputLayoutEditTextMqttBrokerIP"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:theme="@style/InputText">
+
+                <EditText
+                    android:id="@+id/editTextMqttBrokerIP"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:cursorVisible="true"
+                    android:ems="10"
+                    android:hint="@string/txt_mqtt_broker_address"
                     android:inputType="text"
                     android:maxLines="1"
                     android:textColor="@android:color/black"
